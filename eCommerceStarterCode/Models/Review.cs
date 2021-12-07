@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eCommerceStarterCode.Models
 {
-    public class Reviews
+    public class Review
     {
         [Key]
         public int Id { get; set; }
@@ -14,6 +14,6 @@ namespace eCommerceStarterCode.Models
 
         [ForeignKey("Product")]
         public string ProductId { get; set; }
-        public Products Product { get; set; }
+        public Product Product { get; set; }
     }
 }
