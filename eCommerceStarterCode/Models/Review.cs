@@ -13,7 +13,7 @@ namespace eCommerceStarterCode.Models
         public string ReviewContent { get; set; }
 
         [ForeignKey("Product")]
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
     }
 }
