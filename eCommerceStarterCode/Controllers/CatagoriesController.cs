@@ -1,4 +1,5 @@
 ﻿using eCommerceStarterCode.Data;
+using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,15 +31,19 @@ namespace eCommerceStarterCode.Controllers
 
         // GET api/<CatagoriesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int ProductId)
         {
-            return "value";
+            var singleCatagory = _context.Catagories.Where(p => p.ProductId == Productid).FirstOrDefault();
+            return Ok(singleCatagory);
         }
 
         // POST api/<CatagoriesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody]Catagory value)
         {
+            _context.Catagories.Add(value);
+            _context.SaveChanges();
+            return StatusCode(201, value);
         }
 
         // PUT api/<CatagoriesController>/5

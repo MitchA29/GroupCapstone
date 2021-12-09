@@ -1,4 +1,5 @@
 ﻿using eCommerceStarterCode.Data;
+using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,15 +33,19 @@ namespace eCommerceStarterCode.Controllers
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var singleProduct = _context.Products.Where(p => p.ProductId == id);
+            return Ok(singleProduct);
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody]Product value)
         {
+            _context.Products.Add(value);
+            _context.SaveChanges();
+            return StatusCode(201, value);
         }
 
         // PUT api/<ProductsController>/5
@@ -51,8 +56,12 @@ namespace eCommerceStarterCode.Controllers
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var singleProduct = _context.Products.Where(p => p.ProductId == id).SingleOrDefault();
+            _context.Products.Remove(singleProduct);
+            _context.SaveChanges();
+            return Ok(singleProduct);
         }
     }
 }

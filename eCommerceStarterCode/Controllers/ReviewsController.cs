@@ -1,4 +1,5 @@
 ﻿using eCommerceStarterCode.Data;
+using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,15 +32,19 @@ namespace eCommerceStarterCode.Controllers
 
         // GET api/<ReviewsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var singleReview = _context.Reviews.Where(i => i.Id == id).FirstOrDefault();
+            return Ok(singleReview);
         }
 
         // POST api/<ReviewsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Review value)
         {
+            _context.Reviews.Add(value);
+            _context.SaveChanges();
+            return StatusCode(201, value);
         }
 
         // PUT api/<ReviewsController>/5
@@ -52,6 +57,24 @@ namespace eCommerceStarterCode.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet("ratings{productId}")]
+        public IActionResult GetRating(int productId)
+        {
+            var totalRating = _context.Reviews.Where(r => r.ProductId == productId).Select(a => a.Rating).Sum();
+            var numberOfReviews = _context.Reviews.Where(r => r.ProductId == productId).Count();
+            var ratingAverage = 0;
+
+            if(totalRating == 0)
+            {
+                ratingAverage = 0;
+            }
+            else if(numberOfReviews > 0)
+            {
+                ratingAverage = totalRating / numberOfReviews;
+            }
+            return Ok(String.Format("{0:.##}", ratingAverage));
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using eCommerceStarterCode.Data;
+using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,16 +32,20 @@ namespace eCommerceStarterCode.Controllers
         }
 
         // GET api/<ShoppingCartsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{userId}")]
+        public IActionResult getCart(string userId)
         {
-            return "value";
+            var userCart = _context.ShoppingCarts.Include(sc => sc.Product).ToList().Where(sc => sc.UserId == userId);
+            return Ok(userCart);
         }
 
         // POST api/<ShoppingCartsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] ShoppingCart value)
         {
+            _context.ShoppingCarts.Add(value);
+            _context.SaveChanges(); 
+            return StatusCode(201, value);
         }
 
         // PUT api/<ShoppingCartsController>/5
