@@ -31,9 +31,9 @@ namespace eCommerceStarterCode.Controllers
 
         // GET api/<CatagoriesController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int ProductId)
+        public IActionResult Get(int Id)
         {
-            var singleCatagory = _context.Catagories.Where(p => p.ProductId == Productid).FirstOrDefault();
+            var singleCatagory = _context.Catagories.Where(p => p.Id == Id).FirstOrDefault();
             return Ok(singleCatagory);
         }
 
