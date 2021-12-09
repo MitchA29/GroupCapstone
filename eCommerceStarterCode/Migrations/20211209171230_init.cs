@@ -218,7 +218,7 @@ namespace eCommerceStarterCode.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingCart",
+                name: "ShoppingCarts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -229,15 +229,15 @@ namespace eCommerceStarterCode.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCart", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingCart_AspNetUsers_UserId",
+                        name: "FK_ShoppingCarts_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ShoppingCart_Products_ProductId",
+                        name: "FK_ShoppingCarts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
@@ -309,13 +309,13 @@ namespace eCommerceStarterCode.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCart_ProductId",
-                table: "ShoppingCart",
+                name: "IX_ShoppingCarts_ProductId",
+                table: "ShoppingCarts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCart_UserId",
-                table: "ShoppingCart",
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
                 column: "UserId");
         }
 
@@ -340,7 +340,7 @@ namespace eCommerceStarterCode.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCart");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

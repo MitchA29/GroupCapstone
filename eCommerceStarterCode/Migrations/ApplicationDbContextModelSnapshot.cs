@@ -257,7 +257,7 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
